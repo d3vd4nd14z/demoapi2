@@ -73,6 +73,18 @@ INSERT INTO articulos_categorias (articulo, categoria) VALUES (1, 3);
 INSERT INTO articulos_categorias (articulo, categoria) VALUES (1, 4);
 INSERT INTO articulos_categorias (articulo, categoria) VALUES (1, 5);
 
+INSERT INTO autor_categorias (autor, categoria) VALUES (2, 1);
+INSERT INTO autor_categorias (autor, categoria) VALUES (2, 2);
+INSERT INTO autor_categorias (autor, categoria) VALUES (2, 3);
+INSERT INTO autor_categorias (autor, categoria) VALUES (2, 4);
+INSERT INTO autor_categorias (autor, categoria) VALUES (2, 5);
+
+DELETE FROM autor_categorias WHERE autor = 2 AND categoria = 4;
+DELETE FROM autor_categorias WHERE autor = 2 AND categoria = 2;
+
+SELECT *
+FROM autor_categorias;
+
 
 SELECT *
 FROM users;
@@ -105,4 +117,36 @@ SET foreign_key_checks = 1;
 SELECT *
 FROM articulos;
 
+SELECT autores.id, autores.nombre, autores.nickname, autores.email, CONCAT('[', GROUP_CONCAT(JSON_OBJECT('id', categorias.id,
+                                                                                                         'nombre', categorias.nombre)), ']') categorias
+FROM autores
+LEFT JOIN autor_categorias ON autores.id = autor_categorias.autor
+LEFT JOIN categorias ON autor_categorias.categoria = categorias.id
+WHERE autores.id = 2
+GROUP BY autores.id;
 
+SELECT autores.id, autores.nombre, autores.nickname, autores.email, CONCAT('[', GROUP_CONCAT(JSON_OBJECT('id', categorias.id,
+                                                                                                         'nombre', categorias.nombre)), ']') categorias
+FROM autores
+LEFT JOIN autor_categorias ON autores.id = autor_categorias.autor
+LEFT JOIN categorias ON autor_categorias.categoria = categorias.id
+WHERE autores.id = 3
+GROUP BY autores.id, autores.nombre, autores.nickname, autores.email;
+
+
+SELECT *
+FROM autor_categorias;
+
+
+
+SELECT *
+FROM categorias;
+
+SELECT *
+FROM autores;
+
+DELETE FROM autores WHERE id = 3;
+
+SET foreign_key_checks = 0;
+TRUNCATE TABLE autores;
+SET foreign_key_checks = 1;

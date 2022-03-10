@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticulosController;
+use App\Http\Controllers\AutoresController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,12 @@ Route::group([
     Route::post('/articulos', [ArticulosController::class, 'createArticulo']);    
     Route::put('/articulo/{id}', [ArticulosController::class, 'updateArticulo']);
     Route::delete('/articulo/{id}', [ArticulosController::class, 'deleteArticulo']);
+
+    Route::get('/autores', [AutoresController::class, 'getAutores']);
+    Route::get('/autor/{id}', [AutoresController::class, 'getAutor']);
+    Route::post('/autores', [AutoresController::class, 'createAutor']);
+    Route::put('/autor/{id}', [AutoresController::class, 'updateAutor']);
+    Route::delete('/autor/{id}', [AutoresController::class, 'deleteAutor']);
+
 
 });
