@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Articulos;
+use App\Models\Articulo;
 
 
 class ArticulosController extends Controller
@@ -18,7 +18,7 @@ class ArticulosController extends Controller
     }
 
     public function getArticulos(){
-        $articulos = new Articulos();
+        $articulos = new Articulo();
         $data = $articulos->getArticulosAll();
         if (!$data->isEmpty()){
             return response()->json([
@@ -38,7 +38,7 @@ class ArticulosController extends Controller
     }
 
     public function getArticulo(int $id){
-        $articulos = new Articulos();
+        $articulos = new Articulo();
         $data = $articulos->getArticuloById($id);                
         if (!$data->isEmpty()){
             return response()->json([
@@ -57,7 +57,7 @@ class ArticulosController extends Controller
     }
 
     public function createArticulo(Request $request){        
-        $articulo = new Articulos();        
+        $articulo = new Articulo();        
         $data = $articulo->saveArticulo($request);
         if (!is_null($data)){
             return response()->json([
@@ -76,7 +76,7 @@ class ArticulosController extends Controller
     }
 
     public function updateArticulo(int $id, Request $request){
-        $articulo = new Articulos();
+        $articulo = new Articulo();
         $data = $articulo->updateArticulo($id, $request);        
         if (!is_null($data)){
             return response()->json([
@@ -95,7 +95,7 @@ class ArticulosController extends Controller
     }
 
     public function deleteArticulo(int $id){
-        $articulo = new Articulos();
+        $articulo = new Articulo();
         $data = $articulo->deleteArticulo($id);
         if (!is_null($data)){
             return response()->json([

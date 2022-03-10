@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use DB;
-use App\Models\Autores;
+use App\Models\Autor;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Articulos extends Model
+class Articulo extends Model
 {
     use HasFactory;
 
@@ -28,7 +28,7 @@ class Articulos extends Model
      * @since: 2022/03/10 
      */
     public function getArticulosAll(){          
-        $articulos = Articulos::select("articulos.id", "articulos.titulo", "articulos.contenido", DB::raw("JSON_OBJECT('id', autores.id, 
+        $articulos = Articulo::select("articulos.id", "articulos.titulo", "articulos.contenido", DB::raw("JSON_OBJECT('id', autores.id, 
                                                                                                                        'nombre', autores.nombre,
                                                                                                                        'nickname', autores.nickname,
                                                                                                                        'email', autores.email) autor"))
@@ -48,7 +48,7 @@ class Articulos extends Model
      * @since: 2022/03/10
      */
     public function getArticuloById(int $id){        
-        $articulo = Articulos::select("articulos.id", "articulos.titulo", "articulos.contenido", DB::raw("JSON_OBJECT('id', autores.id, 
+        $articulo = Articulo::select("articulos.id", "articulos.titulo", "articulos.contenido", DB::raw("JSON_OBJECT('id', autores.id, 
                                                                                                                       'nombre', autores.nombre,
                                                                                                                       'nickname', autores.nickname,
                                                                                                                       'email', autores.email) autor"))
@@ -69,11 +69,11 @@ class Articulos extends Model
      */
     public function saveArticulo(Request $request){
         $data = null;
-        $articulo = new Articulos(); 
+        $articulo = new Articulo(); 
         if (isset($request->titulo) && $request->titulo!=""){ $articulo->titulo = $request->titulo; }
         if (isset($request->contenido) && $request->contenido!=""){ $articulo->contenido = $request->contenido; }               
         if (isset($request->autor) && $request->autor!=""){ 
-            $autor = Autores::find($request->autor);
+            $autor = Autor::find($request->autor);
             if (!is_null($autor)){ $articulo->autor = $request->autor; } 
         }       
         $articulo->save();
@@ -88,12 +88,12 @@ class Articulos extends Model
      */
     public function updateArticulo(int $id, Request $request){
         $data = null;
-        $articulo = Articulos::find($id);
+        $articulo = Articulo::find($id);
         if (!is_null($articulo)){
             if (isset($request->titulo) && $request->titulo!=""){ $articulo->titulo = $request->titulo; }
             if (isset($request->contenido) && $request->contenido!=""){ $articulo->contenido = $request->contenido; }
             if (isset($request->autor) && $request->autor!=""){ 
-                $autor = Autores::find($request->autor);
+                $autor = Autor::find($request->autor);
                 if (!is_null($autor)){ $articulo->autor = $request->autor; }                 
             }            
             $articulo->save();
@@ -109,7 +109,7 @@ class Articulos extends Model
      */
     public function deleteArticulo(int $id){
         $data = null;
-        $articulo = Articulos::find($id);
+        $articulo = Articulo::find($id);
         if (!is_null($articulo)){
             $articulo->destroy($articulo->id);
             $data = "";
