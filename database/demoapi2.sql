@@ -34,8 +34,8 @@ CREATE TABLE autor_categorias (
 	categoria INT NOT NULL,
 	fecha_creacion TIMESTAMP DEFAULT NOW(),
 	fecha_modificacion TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
-	FOREIGN KEY (autor) REFERENCES autores(id),
-	FOREIGN KEY (categoria) REFERENCES categorias(id)
+	FOREIGN KEY (autor) REFERENCES autores(id) ON DELETE CASCADE,
+	FOREIGN KEY (categoria) REFERENCES categorias(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 CREATE TABLE articulos_categorias (
@@ -44,8 +44,8 @@ CREATE TABLE articulos_categorias (
 	categoria INT NOT NULL,
 	fecha_creacion TIMESTAMP DEFAULT NOW(),
 	fecha_modificacion TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
-	FOREIGN KEY (articulo) REFERENCES articulos(id),
-	FOREIGN KEY (categoria) REFERENCES categorias(id)
+	FOREIGN KEY (articulo) REFERENCES articulos(id) ON DELETE CASCADE,
+	FOREIGN KEY (categoria) REFERENCES categorias(id) ON DELETE CASCADE
 ) ENGINE=INNODB;
 
 
@@ -130,7 +130,7 @@ SELECT autores.id, autores.nombre, autores.nickname, autores.email, CONCAT('[', 
 FROM autores
 LEFT JOIN autor_categorias ON autores.id = autor_categorias.autor
 LEFT JOIN categorias ON autor_categorias.categoria = categorias.id
-WHERE autores.id = 3
+WHERE autores.id = 4
 GROUP BY autores.id, autores.nombre, autores.nickname, autores.email;
 
 
@@ -142,11 +142,23 @@ FROM autor_categorias;
 SELECT *
 FROM categorias;
 
-SELECT *
-FROM autores;
+
+
 
 DELETE FROM autores WHERE id = 3;
 
 SET foreign_key_checks = 0;
 TRUNCATE TABLE autores;
 SET foreign_key_checks = 1;
+
+
+SELECT *
+FROM categorias;
+
+DELETE FROM categorias WHERE id > 5;
+
+
+SELECT * FROM articulos_categorias;
+
+
+
